@@ -28,6 +28,8 @@ struct Args {
     output_filename: String,
 }
 
+// holds mappings from well_known_ports to it's corresponding
+// service
 fn get_service_by_port(port: u16) -> Option<&'static str> {
     match port {
         22 => Some("SSH"),
@@ -139,7 +141,7 @@ async fn write_output_file(open_ports: Vec<u16>, target: String, args: &Args) {
 
             let target_line: String;
             if !args.domain.is_empty() {
-                target_line = format!("BadMap Scan Report for ({}) {}\n\n", args.domain, target);
+                target_line = format!("BadMap Scan Report for {} ({})\n\n", args.domain, target);
             } else {
                 target_line = format!("BadMap Scan Report for {}\n\n", target);
             }
@@ -177,7 +179,7 @@ async fn main() {
 
     let target: String = get_target(&args).await;
     if !args.domain.is_empty() {
-        println!("BadMap Scan Report for ({}) {}\n", args.domain, target);
+        println!("BadMap Scan Report for {} ({})\n", args.domain, target);
     } else {
         println!("BadMap Scan Report for {}\n", target);
     }
