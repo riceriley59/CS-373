@@ -11,13 +11,19 @@ To compile badmap from source you need to have all the dependencies installed an
 The following needs to be installed to compile and run badmap:
 
 rustc >= 1.84.0
+
 cargo >= 1.84.0
 
 # Usage: badmap [OPTIONS]
 
 Options:
+
   -i, --ip <IP>                            [default: ]
+
   -d, --domain <DOMAIN>                    [default: ]
+
   -o, --output-filename <OUTPUT_FILENAME>  [default: output.txt]
+
   -h, --help                               Print help
+
   -V, --version                            Print version
