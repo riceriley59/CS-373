@@ -13,6 +13,7 @@ use tokio::sync::Semaphore;
 use std::process::exit;
 use std::net::IpAddr;
 use std::sync::Arc;
+use std::time::Duration;
 
 // define CLI args using clap
 #[derive(Parser, Debug)]
@@ -84,10 +85,11 @@ async fn get_target(args: &Args) -> String {
 async fn scan_port(target: String, port: u16) -> Option<u16> {
    let address = format!("{}:{}", target, port); 
 
-    if TcpStream::connect(&address).await.is_ok() {
-        Some(port)
-    } else {
-        None
+    let timeout = tokio::time::timeout(Duration::from_secs(1), TcpStream::connect(&address)); 
+
+    match timeout.await {
+        Ok(Ok(_)) => Some(port),
+        _ => None,
     }
 }
 
