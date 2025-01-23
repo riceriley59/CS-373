@@ -83,9 +83,9 @@ async fn get_target(args: &Args) -> String {
 // This is what each thread will run to scan an individual
 // port
 async fn scan_port(target: String, port: u16) -> Option<u16> {
-   let address = format!("{}:{}", target, port); 
+   let address = format!("{}:{}", target, port);
 
-    let timeout = tokio::time::timeout(Duration::from_secs(1), TcpStream::connect(&address)); 
+    let timeout = tokio::time::timeout(Duration::from_secs(2), TcpStream::connect(&address));
 
     match timeout.await {
         Ok(Ok(_)) => Some(port),
